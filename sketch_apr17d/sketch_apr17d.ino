@@ -19,41 +19,22 @@ void loop()
 {
   // setting init value
   
-  // tampilkan
-  
   fadeIn(1, 2, 10);
-  fadeOut(2,3, 1);
-
-  /**
-  for (byte b = 30; b < 255; b++)
-  {
-    
-    setBrightness(b);
-    delay(50);
-  }**/
-
-  /**
-  // redup perlahan
-  for (byte b = 255; b > 30; b--)
-  {
-    setBrightness(b);
-    delay(10);
-  }
-  **/
+  fadeOut(2, 3, 1);
   
   
 }
  
-void fadeIn(int x, int y, int fadeStep)
+void fadeIn(int r, int g, int fadeStep)
 {
    for(int j = 0; j < 255; j+=fadeStep) {
       for(int i = 0; i<255; i++) {
         digitalWrite(latchPin, LOW);
-        shiftOut(dataPin, clockPin, MSBFIRST, x);
+        shiftOut(dataPin, clockPin, MSBFIRST, r);
         digitalWrite(latchPin, HIGH);
   
         digitalWrite(latchPin, LOW);
-        shiftOut(dataPin, clockPin, MSBFIRST, y); // 00000001
+        shiftOut(dataPin, clockPin, MSBFIRST, g); // 00000001
         digitalWrite(latchPin, HIGH);  
       }
       setBrightness(j);
@@ -61,16 +42,16 @@ void fadeIn(int x, int y, int fadeStep)
       
 }
 
-void fadeOut(int x, int y, int fadeStep)
+void fadeOut(int r, int g, int fadeStep)
 {
    for(int j = 255; j > 0; j-=fadeStep) {
       for(int i = 0; i<255; i++) {
         digitalWrite(latchPin, LOW);
-        shiftOut(dataPin, clockPin, MSBFIRST, x);
+        shiftOut(dataPin, clockPin, MSBFIRST, r);
         digitalWrite(latchPin, HIGH);
   
         digitalWrite(latchPin, LOW);
-        shiftOut(dataPin, clockPin, MSBFIRST, y); // 00000001
+        shiftOut(dataPin, clockPin, MSBFIRST, g); // 00000001
         digitalWrite(latchPin, HIGH);  
       }
       setBrightness(j);
