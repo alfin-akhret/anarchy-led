@@ -24,7 +24,9 @@ const int ShiftPWM_dataPin = 11;
 const int ShiftPWM_clockPin = 13;
 
 
-// If your LED's turn on if the pin is low, set this to true, otherwise set it to false.
+// Setting ini menjadi True kalau pengen behavior pin menjadi menjadi terbalik
+// atau LOW = lampu nyala
+// sebaiknya di setting False aja
 const bool ShiftPWM_invertOutputs = false; 
 
 // You can enable the option below to shift the PWM phase of each shift register by 8 compared to the previous.
@@ -39,9 +41,14 @@ const bool ShiftPWM_balanceLoad = false;
 // Choose them wisely and use the PrintInterruptLoad() function to verify your load.
 // There is a calculator on my website to estimate the load.
 
+// ini cuma buat mensetting brightness step. Max 255 karena brghtness disimpan dalam bentuk byte.
+// ingat! ini cuma buat setting step aja, jadi diturunkan pun brightness nya tetap segitu.
 unsigned char maxBrightness = 255;
+// Settin PWM frequency. makin tinggi makin smooth, tp makan resource CPU
 unsigned char pwmFrequency = 75;
-int numRegisters = 1;
+// jumlah Shift register yang digunakan
+int numRegisters = 2;
+// perhitungan LED
 int numRGBleds = numRegisters*8/3;
 
 void setup(){
@@ -58,25 +65,15 @@ void setup(){
 
 }
 
-
-
 void loop()
 {    
-  // Turn all LED's off.
-  ShiftPWM.SetAll(0);
+  // resultnya jadi orange, sepertinya ada hubungannya dengan pemakaian resistor yang cuma 1 (ground)
+  // sehingga RED menjadi lebih dominan karena RED butuh hambatan lebih besar dibanding warna lain.
+  // ShiftPWM.SetRGB (0, 255, 255, 255);
 
-  // Print information about the interrupt frequency, duration and load on your program
-  // ShiftPWM.PrintInterruptLoad();
+  // Intensitas RED dikurangi untuk menghasilkan warna PUTIH
+  // ShiftPWM.SetRGB (0, 180, 255, 255);
 
-  // Fade in and fade out all outputs one by one fast. Usefull for testing your hardware. Use OneByOneSlow when this is going to fast.
-  // ShiftPWM.OneByOneFast();
-
-  // Hue shift all LED's
-  for(int hue = 0; hue<360; hue++){
-//    ShiftPWM.SetAllHSV(hue, 255, 255);
-    ShiftPWM.SetHSV(0, hue, 255, 255); 
-    delay(25);
-  }
   
 }
 
