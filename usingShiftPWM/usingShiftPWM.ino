@@ -57,6 +57,15 @@ void setup(){
 
 }
 
+
+// color setup
+// initial settings
+int startColor = 280; // magenta
+int endColor = 168; // toska
+int internalLoop = 360; // internal loop count
+int colorChangeStep = internalLoop - endColor;
+
+
 void loop()
 {    
   // led 1
@@ -78,24 +87,31 @@ void loop()
   // led 5
   // hijau = 130, 100, 100
   // magenta
-  
-  // initial settings
-  int startColor[3] = {280, 255, 255}; // magenta
-  int endColor[3] = {168, 255, 255}; // toska
-  int internalLoop = 360; // internal loop count
-  int colorChangeStep = internalLoop - endColor[0];
-
-  // light initial color
-  ShiftPWM.SetHSV(0, startColor[0], startColor[1], startColor[2]); // magenta, warna awal
-  
-  // slideDown
-  for(int j = 0; j < colorChangeStep; j++) {
-    if(startColor[0] <= endColor[0]) {
-      break;  
+  int tmp = startColor;
+  if(startColor > endColor) {
+    // slideDown  
+    for(int j = 0; j < colorChangeStep; j++) {
+      if(startColor <= endColor) {
+        break;  
+      }
+      ShiftPWM.SetHSV(0, startColor--, 255, 255);  
+      delay(50);
     }
-    ShiftPWM.SetHSV(0, startColor[0]--,startColor[1],startColor[2]);  
-    delay(200);
+  } else {
+    // climbUp
+    for(int j = 0; j < colorChangeStep; j++) {
+      if(startColor >= endColor) {
+        break;  
+      }
+      ShiftPWM.SetHSV(0, startColor++, 255, 255);  
+      delay(50);
+    }
   }
-  // climbUp
+  startColor = endColor;
+  endColor = tmp;
+}
+
+// Smooth interchange 2 color in one led
+void smooth2Color1Led() {
   
 }
