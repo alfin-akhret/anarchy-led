@@ -23,9 +23,10 @@ const bool ShiftPWM_invertOutputs = false;
 const bool ShiftPWM_balanceLoad = false;
 
 #include <ShiftPWM.h>   // include ShiftPWM.h after setting the pins!
-
+#include "hsv2rgb.h"
 // Include main Led scenario lib
 #include "LedScenario.h"
+#include "FadeInFadeOut.h"
 
 // Here you set the number of brightness levels, the update frequency and the number of shift registers.
 // These values affect the load of ShiftPWM.
@@ -58,10 +59,9 @@ void setup(){
 }
 
 
-// color setup
-// initial settings
-int startColor = 280; // magenta
-int endColor = 168; // toska
+// test
+int fc[3] = {0,255,255};
+int sc[3] = {120, 0, 255};
 
 void loop()
 {    
@@ -84,47 +84,21 @@ void loop()
   // led 5
   // hijau = 130, 100, 100
   // magenta
-
-  smooth2Color1Led(&startColor, &endColor, 50);
-  /**
-  int *x = &startColor;
-  Serial.println((int)*x);
-  **/
-}
-
-// Smooth interchange 2 color in one led
-void smooth2Color1Led(int *startColor, int *endColor, int internalDelay) {
   
-  int internalLoop = 360; // internal loop count
-  int colorChangeStep;
+  //LedScenario scene1;
+  //scene1.smooth2Color1Led(0, &startColor, &endColor, 50, 1);
 
-  int tmp = *startColor;
+  //rgbLedRainbow(1, 5, 3, maxBrightness, numRegisters*8/3); // Fast, over all LED's
 
-  if(*startColor > *endColor) {
-    // slideDown
-    colorChangeStep = internalLoop - *endColor;
-    
-    for(int j = 0; j < colorChangeStep; j++) {
-      if(*startColor <= *endColor) {
-        break;  
-      }
-      ShiftPWM.SetHSV(0, *startColor-=1, 255, 255);  
-      delay(internalDelay);
-    }
-  } else {
-    // climbUp
-    colorChangeStep = internalLoop - *startColor;
-    for(int j = 0; j < colorChangeStep; j++) {
-      if(*startColor >= *endColor) {
-        break;  
-      }
-      ShiftPWM.SetHSV(0, *startColor+=1, 255, 255);  
-      delay(internalDelay);
-    }
+  // Toska ke magenta
+  FadeInFadeOut fifo;
+  for(int i = 0; i < 2; i++){
+    fifo.go(0, sc, fc);
+    fifo.go(0, fc, sc);
   }
-  // swap color
-  *startColor = *endColor;
-  *endColor = tmp;
-  
-  
+  int x[3] = {0, 0, 0};
+  fifo.go(0, sc, x);
+  delay(10000);
 }
+
+
