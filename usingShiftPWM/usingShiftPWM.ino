@@ -35,6 +35,8 @@ const bool ShiftPWM_invertOutputs = false;
 const bool ShiftPWM_balanceLoad = false;
 
 #include <ShiftPWM.h>   // include ShiftPWM.h after setting the pins!
+// Custom library
+#include "LedScenario.h"
 
 // Here you set the number of brightness levels, the update frequency and the number of shift registers.
 // These values affect the load of ShiftPWM.
@@ -73,33 +75,11 @@ void loop()
 
   // Intensitas RED dikurangi untuk menghasilkan warna PUTIH
   // ShiftPWM.SetRGB (0, 180, 255, 255);
-  ShiftPWM.OneByOneFast();
-  
+  // ShiftPWM.OneByOneFast();
+  LedScenario l;
+  l.kedipSlowToFast(1, 180, 255, 255);
 }
 
-// kedip2 slow to fast to steady
-void kedipSlowToFast(int led, unsigned char r, unsigned char g, unsigned char b) {
-  for(int i = 255; i > 0; i-=10) {
-    ShiftPWM.SetRGB (led, r, g, b);
-    delay(i);
-    ShiftPWM.SetRGB (led, 0, 0, 0);
-    delay(i);  
-  }
-
-  for(int i = 90; i > 0; i--) {
-    ShiftPWM.SetRGB (led, r, g, b);
-    delay(20);
-    ShiftPWM.SetRGB (led, 0, 0, 0);
-    delay(20);  
-  }
-
-  for(int i = 0; i < 255; i+=10) {
-    ShiftPWM.SetRGB (led, r, g, b);
-    delay(i);
-    ShiftPWM.SetRGB (led, 0, 0, 0);
-    delay(i);  
-  }
-}
 
 
 void rgbLedRainbow(int numRGBLeds, int delayVal, int numCycles, int rainbowWidth){
