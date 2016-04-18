@@ -59,35 +59,43 @@ void setup(){
 
 void loop()
 {    
-  // Fade in and fade out all outputs one by one fast. Usefull for testing your hardware. Use OneByOneSlow when this is going to fast.
-  // ShiftPWM.OneByOneFast();
-  /**
-  for(int hue = 231; hue>231; hue--){
-    ShiftPWM.SetHSV(3, hue, 100, 100); 
-    delay(50);
-  }
-  **/
-  // Update random LED to random color. Funky!
-  int fadeIn = 0;
-  for(int j = 255; j > 100; j--) {
-    if(fadeIn >= (280-231)) {
-      break;  
-    } else {
-      ShiftPWM.SetHSV(1, 231+fadeIn,255,255);  
-    }
-    delay(200);
-    fadeIn++;
-  }
-  int fadeOut = 280;
-  for(int j = 0; j < 100; j++) {
-    if(fadeOut <= 0) {
-      break;  
-    } else {
-      ShiftPWM.SetHSV(1, fadeOut,255,255);  
-    }
-    delay(200);
-    fadeOut--;
-  }
-  
+  // led 1
+  // magenta = 315, 100, 100;
+  // toska = 175, 100, 100;
 
+  // led 2
+  // ungu = 300, 100, 100
+  // orange = 50, 100, 100;
+
+  // led 3
+  // toska =
+  // merah = 360, 100, 100;
+
+  // led 4
+  // magenta
+  // biru = 230, 100, 100
+
+  // led 5
+  // hijau = 130, 100, 100
+  // magenta
+  
+  // initial settings
+  int startColor[3] = {280, 255, 255}; // magenta
+  int endColor[3] = {168, 255, 255}; // toska
+  int internalLoop = 360; // internal loop count
+  int colorChangeStep = internalLoop - endColor[0];
+
+  // light initial color
+  ShiftPWM.SetHSV(0, startColor[0], startColor[1], startColor[2]); // magenta, warna awal
+  
+  // slideDown
+  for(int j = 0; j < colorChangeStep; j++) {
+    if(startColor[0] <= endColor[0]) {
+      break;  
+    }
+    ShiftPWM.SetHSV(0, startColor[0]--,startColor[1],startColor[2]);  
+    delay(200);
+  }
+  // climbUp
+  
 }
