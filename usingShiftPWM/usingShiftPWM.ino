@@ -85,7 +85,7 @@ void loop()
   // hijau = 130, 100, 100
   // magenta
 
-  smooth2Color1Led(&startColor, &endColor);
+  smooth2Color1Led(&startColor, &endColor, 50);
   /**
   int *x = &startColor;
   Serial.println((int)*x);
@@ -93,30 +93,33 @@ void loop()
 }
 
 // Smooth interchange 2 color in one led
-void smooth2Color1Led(int *startColor, int *endColor) {
+void smooth2Color1Led(int *startColor, int *endColor, int internalDelay) {
   
   int internalLoop = 360; // internal loop count
-  int colorChangeStep = internalLoop - *endColor;
+  int colorChangeStep;
 
   int tmp = *startColor;
 
   if(*startColor > *endColor) {
     // slideDown
+    colorChangeStep = internalLoop - *endColor;
+    
     for(int j = 0; j < colorChangeStep; j++) {
       if(*startColor <= *endColor) {
         break;  
       }
       ShiftPWM.SetHSV(0, *startColor-=1, 255, 255);  
-      delay(50);
+      delay(internalDelay);
     }
   } else {
     // climbUp
+    colorChangeStep = internalLoop - *startColor;
     for(int j = 0; j < colorChangeStep; j++) {
       if(*startColor >= *endColor) {
         break;  
       }
       ShiftPWM.SetHSV(0, *startColor+=1, 255, 255);  
-      delay(50);
+      delay(internalDelay);
     }
   }
   // swap color
