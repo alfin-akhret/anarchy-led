@@ -59,9 +59,16 @@ void setup(){
 }
 
 
-// test
-int fc[3] = {0,255,255};
-int sc[3] = {120, 0, 255};
+// magenta ke toska
+int toska[3] = {0,255,255};
+int magenta[3] = {125, 0, 255};
+int ungu[3] = {75, 0, 255};
+int orange[3] = {160, 180, 0};
+int merah[3] = {180, 0, 0};
+int hijau[3] = {0, 255, 0};
+int biru[3] = {0, 0, 255};
+
+int off[3] = {0, 0, 0};
 
 void loop()
 {    
@@ -92,13 +99,45 @@ void loop()
 
   // Toska ke magenta
   FadeInFadeOut fifo;
-  for(int i = 0; i < 2; i++){
-    fifo.go(0, sc, fc);
-    fifo.go(0, fc, sc);
+  for(int i = 0; i < 1; i++){
+    fifo.go(0, off, magenta, 10, 0);
+    fifo.go(0, magenta, toska, 5, 2000);
+    fifo.go(0, toska, magenta, 5, 2000);
   }
-  int x[3] = {0, 0, 0};
-  fifo.go(0, sc, x);
-  delay(10000);
+  fifo.go(0, magenta, off, 5, 0);
+
+  // Ungu ke Orange
+  for(int i = 0; i < 1; i++){
+    fifo.go(1, off, ungu, 10, 0);
+    fifo.go(1, ungu, orange, 5, 2000);
+    fifo.go(1, orange, ungu, 5, 2000);
+  }
+  fifo.go(1, ungu, off, 5, 0);
+
+  // toska ke merah
+  for(int i = 0; i < 1; i++){
+    fifo.go(2, off, toska, 10, 0);
+    fifo.go(2, toska, merah, 5, 2000);
+    fifo.go(2, merah, toska, 5, 2000);
+  }
+  fifo.go(2, toska, off, 5, 0);
+
+  // magenta ke biru
+  for(int i = 0; i < 1; i++){
+    fifo.go(3, off, magenta, 10, 0);
+    fifo.go(3, magenta, biru, 5, 2000);
+    fifo.go(3, biru, magenta, 5, 2000);
+  }
+  fifo.go(3, magenta, off, 5, 0);
+  
+  // hijau ke magenta
+  for(int i = 0; i < 1; i++){
+    fifo.go(4, off, hijau, 10, 0);
+    fifo.go(4, hijau, magenta, 5, 2000);
+    fifo.go(4, magenta, hijau, 5, 2000);
+  }
+  fifo.go(4, hijau, off, 5, 0);
+  
 }
 
 

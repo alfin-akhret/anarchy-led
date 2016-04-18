@@ -4,27 +4,26 @@
 class FadeInFadeOut {
   public:
     void crossFade(int color[3]);
-    void go(int targetLed, int firstColor[3], int secondColor[3]);
+    void go(int targetLed, int firstColor[3], int secondColor[3], int lapseTime, int steadyTime);
 
-    int led, redVal, grnVal, bluVal, prevR, prevG, prevB;
+    int led, redVal, grnVal, bluVal, prevR, prevG, prevB, lapseTime, steadyTime;
 
   private:
     int calculateVal(int step, int val, int i);
     int calculateStep(int prevValue, int endValue);
 };
 
-void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3]) {
+void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
   redVal = firstColor[0]; // r1
   grnVal = firstColor[1]; // r2
   bluVal = firstColor[2]; // r3
   prevR = redVal; // r1
   prevG = grnVal; // r2
   prevB = bluVal; // r3
-  // lapseTime = l;
-  // steadyTime = s;
+  lapseTime = l;
+  steadyTime = s;
 
   led = targetLed;
-  // crossFade(firstColor);
   crossFade(secondColor);
 }
 
@@ -46,14 +45,14 @@ void FadeInFadeOut::crossFade(int color[3]) {
 
     ShiftPWM.SetRGB(led, redVal, grnVal, bluVal);
 
-    delay(10); // Pause for 'wait' milliseconds before resuming the loop
+    delay(lapseTime); // Pause for 'wait' milliseconds before resuming the loop
   }
 
   // Update current values for next loop
   prevR = redVal; 
   prevG = grnVal; 
   prevB = bluVal;
-  delay(400); // Pause for optional 'wait' milliseconds before resuming the loop
+  delay(steadyTime); // Pause for optional 'wait' milliseconds before resuming the loop
 }
 
 int FadeInFadeOut::calculateVal(int step, int val, int i) {
