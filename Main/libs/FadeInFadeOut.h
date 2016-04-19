@@ -1,19 +1,41 @@
 /**
   author: alfin.akhret@gmail.com
+* Crossfading only one led using with help of ShiftPWM
+* how to use:
+* from Main.ino
+  
+  #include "libs/FadeInFadeOut.h"
+
+  int green[3] = {0, 255, 0};
+  int red[3] = {255, 0, 0};
+  int led = 0;
+  void loop() {
+    FadeInFadeOut ff;
+    ff.go(led, green, red, 100, 2000); 
+}
 */
 
 class FadeInFadeOut {
   public:
-    void crossFade(int color[3]);
     void go(int targetLed, int firstColor[3], int secondColor[3], int lapseTime, int steadyTime);
 
     int led, redVal, grnVal, bluVal, prevR, prevG, prevB, lapseTime, steadyTime;
 
   private:
+    void crossFade(int color[3]);
     int calculateVal(int step, int val, int i);
     int calculateStep(int prevValue, int endValue);
 };
 
+// go()
+// @desc: 		Crossfading dari satu led dari warna pertama ke warna kedua 
+// @params:		
+// int targetLed 	nomor LED yang akan dimanipulasi	
+// int[] firstColor 	warna RGB awal. berbentuk array. contoh: lihat file colorConfig.h	
+// int[] secondColor 	warna RGB akhir. berbentuk array. contoh: lihat file colorConfig.h	
+// int l 		lapseTime, waktu yang dibutuhkan untuk transisi dari warna awal ke warna akhir. default 10 ms
+// int s		Steady time, waktu yang digunakan untuk "steady" atau diam. 
+//          waktu ini berlaku untuk warna awal dan warna akhir. default 4000 ms 
 void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
   redVal = firstColor[0]; // r1
   grnVal = firstColor[1]; // r2
@@ -28,7 +50,8 @@ void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int
   crossFade(secondColor);
 }
 
- // CROSSFADE
+// PRIVATE CLASS MEMBERS
+// jangan diganggu.
 void FadeInFadeOut::crossFade(int color[3]) {
   // Convert to 0-255
   int R = color[0];
