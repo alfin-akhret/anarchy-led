@@ -1,6 +1,7 @@
 /**
   author: alfin.akhret@gmail.com
 */
+
 class FadeInFadeOut {
   public:
     void crossFade(int color[3]);
