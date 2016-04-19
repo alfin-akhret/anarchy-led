@@ -1,8 +1,8 @@
 /**
   author: alfin.akhret@gmail.com
 * Crossfading only one led using with help of ShiftPWM
-* how to use:
-* from Main.ino
+* Cara penggunaan:
+* Jika ingin menggunakan pada file .ino
   
   #include "libs/FadeInFadeOut.h"
 
@@ -13,6 +13,8 @@
     FadeInFadeOut ff;
     ff.go(led, green, red, 100, 2000); 
 }
+
+NOTES: untuk detail cara pengguna lihat file /scenario/FadeSerie.h
 */
 
 class FadeInFadeOut {

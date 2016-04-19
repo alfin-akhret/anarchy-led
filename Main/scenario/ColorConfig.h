@@ -1,3 +1,6 @@
+// Configurasi warna
+// File ini digunakan oleh file2 scenario
+// lihat /scenario/FadeSeries.h untuk contoh penggunaan
 int toska[3] = {10, 225, 255};
 int magenta[3] = {125, 25, 225};
 int ungu[3] = {75, 10, 255};
