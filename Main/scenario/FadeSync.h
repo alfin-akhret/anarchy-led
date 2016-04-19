@@ -15,7 +15,9 @@
 
 // sertakan file library yang dibutuhkan 
 
-int leds[5] = {0, 1, 2, 3, 4};
+int leds[2] = {0, 1};
+int leds2[5] = {0, 1, 2, 3, 4};
+
 void FadeSync() {
   FadeInFadeOut fifo; // Buat object FadeInFadeOut dg nama fifo
 
@@ -29,8 +31,17 @@ void FadeSync() {
   // int s    Steady time, waktu yang digunakan untuk "steady" atau diam. 
   //          waktu ini berlaku untuk warna awal dan warna akhir. default 4000 ms 
 
-  fifo.crossFadeSync(leds, 5, off, magenta, 10, 0);
-  fifo.crossFadeSync(leds, 5, magenta, toska, 10, 0);
-  fifo.crossFadeSync(leds, 5, toska, off, 10, 0);
+  fifo.crossFadeSync(leds, 2, off, magenta, 10, 0);
+  fifo.crossFadeSync(leds, 2, magenta, toska, 10, 0);
+  fifo.crossFadeSync(leds, 2, toska, off, 10, 0);
+
+}
+
+void FadeSync2() {
+  FadeInFadeOut fifo; // Buat object FadeInFadeOut dg nama fifo
+
+  fifo.crossFadeSync(leds2, 5, off, magenta, 10, 0);
+  fifo.crossFadeSync(leds2, 5, magenta, toska, 10, 0);
+  fifo.crossFadeSync(leds2, 5, toska, off, 10, 0);
 
 }

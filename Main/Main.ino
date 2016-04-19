@@ -65,7 +65,9 @@ void setup(){
 void loop()
 {   
   FadeSync();
+  FadeSync2();
   FadeSeries();
+  FadeSync2();
 }
 
 
