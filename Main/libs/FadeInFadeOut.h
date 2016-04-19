@@ -19,11 +19,10 @@ NOTES: untuk detail cara pengguna lihat file /scenario/FadeSerie.h
 
 class FadeInFadeOut {
   public:
-    void go(int targetLed, int firstColor[3], int secondColor[3], int lapseTime, int steadyTime);
+    void crossFade(int targetLed, int firstColor[3], int secondColor[3], int l, int s);
     int led, redVal, grnVal, bluVal, prevR, prevG, prevB, lapseTime, steadyTime;
 
   private:
-    void crossFade(int color[3]);
     int calculateVal(int step, int val, int i);
     int calculateStep(int prevValue, int endValue);
 };
@@ -37,7 +36,12 @@ class FadeInFadeOut {
 // int l 		lapseTime, waktu yang dibutuhkan untuk transisi dari warna awal ke warna akhir. default 10 ms
 // int s		Steady time, waktu yang digunakan untuk "steady" atau diam. 
 //          waktu ini berlaku untuk warna awal dan warna akhir. default 4000 ms 
-void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
+
+
+// PRIVATE CLASS MEMBERS
+// jangan diganggu.
+// void FadeInFadeOut::crossFade(int color[3]) {
+void FadeInFadeOut::crossFade(int targetLed, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
   redVal = firstColor[0]; // r1
   grnVal = firstColor[1]; // r2
   bluVal = firstColor[2]; // r3
@@ -49,16 +53,9 @@ void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int
 
   led = targetLed;
 
-  crossFade(secondColor);
-}
-
-// PRIVATE CLASS MEMBERS
-// jangan diganggu.
-void FadeInFadeOut::crossFade(int color[3]) {
-
-  int R = color[0];
-  int G = color[1];
-  int B = color[2];
+  int R = secondColor[0];
+  int G = secondColor[1];
+  int B = secondColor[2];
 
   int stepR = calculateStep(prevR, R);
   int stepG = calculateStep(prevG, G); 

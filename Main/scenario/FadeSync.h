@@ -31,15 +31,15 @@ void FadeSync() {
 
 
 
-  fifo.go(0, off, magenta, 10, 0);
-  fifo.go(1, off, ungu, 10, 0);
+  fifo.crossFade(0, off, magenta, 10, 0);
+  fifo.crossFade(1, off, ungu, 10, 0);
 
-  fifo.go(0, magenta, toska, 5, 2000); 
-  fifo.go(1, ungu, orange, 5, 2000);
+  fifo.crossFade(0, magenta, toska, 5, 2000); 
+  fifo.crossFade(1, ungu, orange, 5, 2000);
 
-  fifo.go(0, toska, magenta, 5, 2000);
-  fifo.go(1, orange, ungu, 5, 2000);    
+  fifo.crossFade(0, toska, magenta, 5, 2000);
+  fifo.crossFade(1, orange, ungu, 5, 2000);    
   
-  fifo.go(0, magenta, off, 5, 0);
-  fifo.go(1, ungu, off, 5, 0);
+  fifo.crossFade(0, magenta, off, 5, 0);
+  fifo.crossFade(1, ungu, off, 5, 0);
 }
