@@ -20,14 +20,15 @@ NOTES: untuk detail cara pengguna lihat file /scenario/FadeSerie.h
 class FadeInFadeOut {
   public:
     void crossFade(int targetLed, int firstColor[3], int secondColor[3], int l, int s);
-    int led, redVal, grnVal, bluVal, prevR, prevG, prevB, lapseTime, steadyTime;
+    void crossFadeSync(int targetLeds[], int ledNum, int firstColor[3], int secondColor[3], int l, int s);
+    int redVal, grnVal, bluVal, prevR, prevG, prevB;
 
   private:
     int calculateVal(int step, int val, int i);
     int calculateStep(int prevValue, int endValue);
 };
 
-// go()
+// crossFade()
 // @desc: 		Crossfading dari satu led dari warna pertama ke warna kedua 
 // @params:		
 // int targetLed 	nomor LED yang akan dimanipulasi	
@@ -36,11 +37,6 @@ class FadeInFadeOut {
 // int l 		lapseTime, waktu yang dibutuhkan untuk transisi dari warna awal ke warna akhir. default 10 ms
 // int s		Steady time, waktu yang digunakan untuk "steady" atau diam. 
 //          waktu ini berlaku untuk warna awal dan warna akhir. default 4000 ms 
-
-
-// PRIVATE CLASS MEMBERS
-// jangan diganggu.
-// void FadeInFadeOut::crossFade(int color[3]) {
 void FadeInFadeOut::crossFade(int targetLed, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
   redVal = firstColor[0]; // r1
   grnVal = firstColor[1]; // r2
@@ -48,10 +44,6 @@ void FadeInFadeOut::crossFade(int targetLed, int firstColor[3], int secondColor[
   prevR = redVal; // r1
   prevG = grnVal; // r2
   prevB = bluVal; // r3
-  lapseTime = l;
-  steadyTime = s;
-
-  led = targetLed;
 
   int R = secondColor[0];
   int G = secondColor[1];
@@ -66,18 +58,55 @@ void FadeInFadeOut::crossFade(int targetLed, int firstColor[3], int secondColor[
     grnVal = calculateVal(stepG, grnVal, i);
     bluVal = calculateVal(stepB, bluVal, i);
 
-    ShiftPWM.SetRGB(led, redVal, grnVal, bluVal);
+    ShiftPWM.SetRGB(targetLed, redVal, grnVal, bluVal);
 
-    delay(lapseTime); // Pause for 'wait' milliseconds before resuming the loop
+    delay(l); // Pause for 'wait' milliseconds before resuming the loop
   }
 
   // Update current values for next loop
   prevR = redVal; 
   prevG = grnVal; 
   prevB = bluVal;
-  delay(steadyTime); // Pause for optional 'wait' milliseconds before resuming the loop
+  delay(s); // Pause for optional 'wait' milliseconds before resuming the loop
 }
 
+void FadeInFadeOut::crossFadeSync(int targetLeds[], int ledNum, int firstColor[3], int secondColor[3], int l=10, int s=4000) {
+  redVal = firstColor[0]; // r1
+  grnVal = firstColor[1]; // r2
+  bluVal = firstColor[2]; // r3
+  prevR = redVal; // r1
+  prevG = grnVal; // r2
+  prevB = bluVal; // r3
+
+  int R = secondColor[0];
+  int G = secondColor[1];
+  int B = secondColor[2];
+
+  int stepR = calculateStep(prevR, R);
+  int stepG = calculateStep(prevG, G); 
+  int stepB = calculateStep(prevB, B);
+
+  for (int i = 0; i <= 255; i++) {
+    redVal = calculateVal(stepR, redVal, i);
+    grnVal = calculateVal(stepG, grnVal, i);
+    bluVal = calculateVal(stepB, bluVal, i);
+
+    for(int j=0; j < ledNum; j++) {
+      ShiftPWM.SetRGB(targetLeds[j], redVal, grnVal, bluVal);
+    }
+
+    delay(l); // Pause for 'wait' milliseconds before resuming the loop
+  }
+
+  // Update current values for next loop
+  prevR = redVal; 
+  prevG = grnVal; 
+  prevB = bluVal;
+  delay(s); // Pause for optional 'wait' milliseconds before resuming the loop
+}
+
+// PRIVATE CLASS MEMBERS
+// jangan diganggu.
 int FadeInFadeOut::calculateVal(int step, int val, int i) {
 
   if ((step) && i % step == 0) { // If step is non-zero and its time to change a value,
