@@ -1,9 +1,10 @@
 /**
  * Anarchy Led
  * Desc: Led installation for Alvan Hafiz's Artwork
+ * Using Elco Jacob's awesome ShiftPWM library
  * @autho: alfin.akhret@gmail.com
- * 
  */
+
 // Pin for HC595 Storage register (latch)
 const int ShiftPWM_latchPin=8;
 
@@ -11,7 +12,6 @@ const int ShiftPWM_latchPin=8;
 #define SHIFTPWM_NOSPI
 const int ShiftPWM_dataPin = 11;  // Pin for HC595 Serial (DS)
 const int ShiftPWM_clockPin = 13; // Pin for HC595 Shift register (clock)
-
 
 // True = Invert pin behavior. LOW = ON
 // False = Normal pin behavior. LOW = OFF
@@ -25,7 +25,6 @@ const bool ShiftPWM_balanceLoad = false;
 #include <ShiftPWM.h>   // include ShiftPWM.h after setting the pins!
 #include "hsv2rgb.h"
 // Include main Led scenario lib
-#include "LedScenario.h"
 #include "FadeInFadeOut.h"
 
 // Here you set the number of brightness levels, the update frequency and the number of shift registers.
@@ -72,30 +71,8 @@ int off[3] = {0, 0, 0};
 
 void loop()
 {    
-  // led 1
-  // magenta = 315, 100, 100;
-  // toska = 175, 100, 100;
-
-  // led 2
-  // ungu = 300, 100, 100
-  // orange = 50, 100, 100;
-
-  // led 3
-  // toska =
-  // merah = 360, 100, 100;
-
-  // led 4
-  // magenta
-  // biru = 230, 100, 100
-
-  // led 5
-  // hijau = 130, 100, 100
-  // magenta
-  
-  //LedScenario scene1;
-  //scene1.smooth2Color1Led(0, &startColor, &endColor, 50, 1);
-
-  //rgbLedRainbow(1, 5, 3, maxBrightness, numRegisters*8/3); // Fast, over all LED's
+  Serial.println("Testing serial output\n");
+  Serial.println("Testing stino\n");
 
   // Toska ke magenta
   FadeInFadeOut fifo;
