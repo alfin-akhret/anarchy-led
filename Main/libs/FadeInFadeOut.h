@@ -20,7 +20,6 @@ NOTES: untuk detail cara pengguna lihat file /scenario/FadeSerie.h
 class FadeInFadeOut {
   public:
     void go(int targetLed, int firstColor[3], int secondColor[3], int lapseTime, int steadyTime);
-
     int led, redVal, grnVal, bluVal, prevR, prevG, prevB, lapseTime, steadyTime;
 
   private:
@@ -49,13 +48,14 @@ void FadeInFadeOut::go(int targetLed, int firstColor[3], int secondColor[3], int
   steadyTime = s;
 
   led = targetLed;
+
   crossFade(secondColor);
 }
 
 // PRIVATE CLASS MEMBERS
 // jangan diganggu.
 void FadeInFadeOut::crossFade(int color[3]) {
-  // Convert to 0-255
+
   int R = color[0];
   int G = color[1];
   int B = color[2];

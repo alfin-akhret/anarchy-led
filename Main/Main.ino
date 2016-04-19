@@ -11,7 +11,7 @@
  --------------------------------------------------------------------------
  */
 #define SHIFTPWM_NOSPI
-const int ShiftPWM_latchPin=8;                    // Pin for HC595 Storage register (latch)
+const int ShiftPWM_latchPin=8;	                  // Pin for HC595 Storage register (latch)
 const int ShiftPWM_dataPin = 11;                  // Pin for HC595 Serial (DS)
 const int ShiftPWM_clockPin = 13;                 // Pin for HC595 Shift register (clock)
 const bool ShiftPWM_invertOutputs = false; 
@@ -21,12 +21,14 @@ const bool ShiftPWM_balanceLoad = true;
 // Include disini jangan dipindah2kan
 // Notes: https://www.arduino.cc/en/Guide/Libraries
 #include <ShiftPWM.h>                        
-
+#include "libs/FadeInFadeOut.h"
 /** SCENARIO FILES 
 /* Include semua scenario files yang akan digunakan disini
 /* -------------------------------------------------------------------------- 
 */
+#include "scenario/ColorConfig.h"
 #include "scenario/FadeSeries.h"
+#include "scenario/FadeSync.h"
 
 /** Settingan Umum ShiftPWM **
 / ---------------------------------------------------------------------------*/
@@ -61,8 +63,8 @@ void setup(){
 /* Main Program
 /* ----------------------------------------------*/
 void loop()
-{    
-  FadeSeries();
+{   
+  FadeSync();
 }
 
 

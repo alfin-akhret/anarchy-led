@@ -14,8 +14,8 @@
 **/
 
 // sertakan file library yang dibutuhkan 
-#include "libs/FadeInFadeOut.h"
-#include "ColorConfig.h"
+
+
 void FadeSeries() {
   FadeInFadeOut fifo; // Buat object FadeInFadeOut dg nama fifo
 
